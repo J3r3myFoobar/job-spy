@@ -11,14 +11,14 @@ from resume_reader import Resume
 from text_analysis import TextAnalyser
 
 # Define a constant for the job CSV file path
-JOB_CSV_FILE = "job.csv"
+JOBS_CSV_FILE = "jobs.csv"
 
 
 def backup_historical_job_csv_if_required():
-    if os.path.exists(JOB_CSV_FILE):
+    if os.path.exists(JOBS_CSV_FILE):
         timestamp = datetime.now().isoformat()
         backup_filename = f"jobs.csv-{timestamp}"
-        shutil.copy(JOB_CSV_FILE, backup_filename)
+        shutil.copy(JOBS_CSV_FILE, backup_filename)
 
 
 def filter_out_duplicate(df):
@@ -48,7 +48,7 @@ def add_similarity_number(df):
 
 
 def filter_by_similarity(df):
-    return df[df["similarity"] >= 0.805]
+    return df[df["similarity"] >= 0.81]
 
 
 def print_summary(df):
@@ -59,12 +59,12 @@ def print_summary(df):
 
 def update_historical_job_csv(jobs):
     existing_jobs = (
-        pd.read_csv(JOB_CSV_FILE) if os.path.exists(JOB_CSV_FILE) else pd.DataFrame()
+        pd.read_csv(JOBS_CSV_FILE) if os.path.exists(JOBS_CSV_FILE) else pd.DataFrame()
     )
     updated_jobs = pd.concat([existing_jobs, jobs], ignore_index=True)
     updated_jobs = filter_out_duplicate(updated_jobs)
     updated_jobs.to_csv(
-        JOB_CSV_FILE, quoting=csv.QUOTE_NONNUMERIC, escapechar="\\", index=False
+        JOBS_CSV_FILE, quoting=csv.QUOTE_NONNUMERIC, escapechar="\\", index=False
     )
     print(f"Updated job list with {len(updated_jobs)} jobs.")
 

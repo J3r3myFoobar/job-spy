@@ -3,7 +3,7 @@ from jobspy import scrape_jobs
 
 
 class JobScrapper:
-    SITES_NAME = ["indeed", "linkedin", "glassdoor"]
+    SITES_NAME = ["indeed", "linkedin"]
     LOCATION = "Geneva"
     MAX_DISTANCE = 10
     NB_RESULTS_WANTED = 50
@@ -40,9 +40,3 @@ class JobScrapper:
             return jobs.drop_duplicates(subset=["id"], keep="first")
         else:
             return pd.DataFrame()  # Return empty DataFrame if no jobs found
-
-
-if __name__ == "__main__":
-    scrapper = JobScrapper()
-    terms = ["software developer", "java developer"]
-    print(scrapper.fetch(terms))
